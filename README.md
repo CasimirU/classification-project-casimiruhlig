@@ -34,13 +34,15 @@ Given a diabetes patient's clinical history, demographics, and treatment data at
 | **Benefit** | **Hospital Staff:** Optimized bed management and clearer discharge workflows. | **Taxpayers/Insurers:** Long-term stabilization of healthcare premiums due to lower system costs. |
 | **Harm / Risk** | **Vulnerable Patients:** Risk of "algorithmic bias" where certain demographics are flagged for early discharge incorrectly. | **Medical Staff Autonomy:** Potential "automation bias" where doctors stop questioning the AI, leading to skill atrophy. |
 
-> **Key Benefits:** Optimized resource allocation, reduced healthcare costs, and better patient outcomes through targeted intervention.
+> **Key Benefits:** Optimized resource allocation, reduced healthcare costs, and better patient outcomes through targeted intervention. <br>
 > **Potential Harms:** Discriminatory predictions affecting vulnerable populations or inappropriate early discharge leading to adverse health events.
 
 ---
 
 ## 📊 Dataset Discovery & Selection
+Why this Dataset, this DataSet is openly available to Download, other Hospital DataSets you have to Request Access or be Part of Specific Institutions.
 
 ### Chosen Dataset
 **Diabetes 130 US hospitals for years 1999-2008**
-* **Source:** [UCI Machine Learning Repository](
+* Dataset download: https://archive.ics.uci.edu/dataset/296/diabetes+130-us+hospitals+for+years+1999-2008
+* Data set by: Clore, J., Cios, K., DeShazo, J., & Strack, B. (2014). Diabetes 130-US Hospitals for Years 1999-2008 [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5230J.
