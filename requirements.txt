@@ -1,0 +1,16 @@
+# Data Manipulation and Analysis
+pandas
+numpy
+
+# Visualization
+matplotlib
+seaborn
+
+# Machine Learning and Preprocessing
+scikit-learn
+
+# Handling Class Imbalance (SMOTE)
+imbalanced-learn
+
+# Gradient Boosting
+xgboost
