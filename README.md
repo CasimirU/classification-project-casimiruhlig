@@ -1,5 +1,4 @@
-# Hospital Readmission Prediction | Casimir Uhlig
-**Tomorrow University: IC**
+# Hospital Readmission Prediction | Casimir Uhlig | Tomorrow University - ML-Classification Project
 
 ## 🏥 Context
 The German healthcare system faces mounting financial pressure, with state insurance companies paying **€102 billion in 2024** for hospital care. A significant portion of these costs stems from preventable readmissions and suboptimal discharge decisions.
