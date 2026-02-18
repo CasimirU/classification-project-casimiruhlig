@@ -1,0 +1,17 @@
+feature,n_unique
+comorbidity_interaction,181
+age_specialty_interaction,72
+diag_combination,42
+payer_code,17
+diag_2,14
+diag_3,14
+diag_1,13
+age,10
+medical_specialty,10
+payer_group,6
+a1c_med_interaction,6
+race,5
+admission_type_id,4
+admission_source_id,4
+change,2
+diabetesMed,2

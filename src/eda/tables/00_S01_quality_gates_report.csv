@@ -1,0 +1,7 @@
+readmitted,count,percentage,dataset
+NO,43891,53.91,train
+>30,28436,34.93,train
+<30,9085,11.16,train
+NO,10973,53.91,test
+>30,7109,34.93,test
+<30,2272,11.16,test

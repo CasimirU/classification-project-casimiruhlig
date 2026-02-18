@@ -1,0 +1,9 @@
+feature,train_skew_before,train_skew_after,transform_applied
+number_emergency,16.4736,3.5785,log1p
+number_outpatient,8.6988,2.7216,log1p
+number_inpatient,3.6422,1.436,log1p
+num_medications,1.3252,-0.473,log1p
+num_procedures,1.3113,0.5124,log1p
+time_in_hospital,1.1319,0.1017,log1p
+number_diagnoses,-0.9016,-0.9016,none
+num_lab_procedures,-0.2377,-0.2377,none

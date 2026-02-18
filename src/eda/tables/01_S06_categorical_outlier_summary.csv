@@ -1,0 +1,21 @@
+Feature,Unique Categories,Rare Categories Count,Rare Categories List,Total Outlier %
+medical_specialty,69,59,"['Pulmonology', 'Psychiatry', 'ObstetricsandGynecology', 'Urology', 'Surgery-Cardiovascular/Thoracic', 'Gastroenterology', 'Surgery-Vascular', 'Surgery-Neuro', 'PhysicalMedicineandRehabilitation', 'Oncology', 'Pediatrics', 'Neurology', 'Hematology/Oncology', 'Pediatrics-Endocrinology', 'Endocrinology', 'Otolaryngology', 'Psychology', 'Surgery-Thoracic', 'Podiatry', 'Surgery-Cardiovascular', 'Pediatrics-CriticalCare', 'Hematology', 'Gynecology', 'Hospitalist', 'Radiology', 'Surgeon', 'Ophthalmology', 'Surgery-Plastic', 'InfectiousDiseases', 'Osteopath', 'SurgicalSpecialty', 'Obsterics&Gynecology-GynecologicOnco', 'Pediatrics-Pulmonology', 'Obstetrics', 'Anesthesiology-Pediatric', 'Pathology', 'Rheumatology', 'OutreachServices', 'Surgery-Colon&Rectal', 'Anesthesiology', 'PhysicianNotFound', 'Surgery-Maxillofacial', 'Pediatrics-Neurology', 'Surgery-Pediatric', 'AllergyandImmunology', 'Cardiology-Pediatric', 'Endocrinology-Metabolism', 'Psychiatry-Child/Adolescent', 'Dentistry', 'DCPTEAM', 'Pediatrics-EmergencyMedicine', 'Resident', 'Pediatrics-Hematology-Oncology', 'Pediatrics-AllergyandImmunology', 'Speech', 'Perinatology', 'Proctology', 'Neurophysiology', 'Dermatology']",8.18
+weight,10,8,"['[50-75)', '[100-125)', '[125-150)', '[25-50)', '[0-25)', '[150-175)', '[175-200)', '>200']",1.84
+specialty_logic,10,2,"['OBGYN', 'Pediatrics']",1.32
+age,10,2,"['[10-20)', '[0-10)']",0.84
+admission_source_id,6,2,"['Court_Law', 'Transfer_Facility']",0.14
+miglitol,2,1,['Yes'],0.04
+metformin-pioglitazone,2,1,['Yes'],0.0
+metformin-rosiglitazone,2,1,['Yes'],0.0
+glimepiride-pioglitazone,2,1,['Yes'],0.0
+glipizide-metformin,2,1,['Yes'],0.01
+glyburide-metformin,2,1,['Yes'],0.69
+tolazamide,2,1,['Yes'],0.04
+race,6,1,['Asian'],0.61
+acarbose,2,1,['Yes'],0.3
+gender,3,1,['Unknown/Invalid'],0.0
+acetohexamide,2,1,['Yes'],0.0
+chlorpropamide,2,1,['Yes'],0.09
+nateglinide,2,1,['Yes'],0.67
+diag_1,13,1,['Diabetes'],0.24
+tolbutamide,2,1,['Yes'],0.02

@@ -1,0 +1,18 @@
+Column,Lower Bound,Upper Bound,Outlier Count,Percentage (%)
+has_respiratory,0.0,0.0,18007,22.12
+number_outpatient,0.0,0.0,13392,16.45
+count_adjusted_up,0.0,0.0,11425,14.03
+count_adjusted_down,0.0,0.0,11252,13.82
+number_emergency,0.0,0.0,9066,11.14
+diabetes_complications,0.0,0.0,8724,10.72
+adj_med_ratio,-0.05,0.08,5877,7.22
+number_inpatient,-1.5,2.5,5605,6.88
+num_procedures,-3.0,5.0,3989,4.9
+num_medications,-5.0,35.0,2053,2.52
+time_in_hospital,-4.0,12.0,1784,2.19
+number_diagnoses,1.5,13.5,218,0.27
+patient_nbr,-72654050.25,183497091.75,202,0.25
+num_lab_procedures,-8.0,96.0,116,0.14
+med_adjusted_binary,-1.5,2.5,0,0.0
+has_circulatory,-1.5,2.5,0,0.0
+target,-1.5,2.5,0,0.0

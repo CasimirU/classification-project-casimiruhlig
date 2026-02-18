@@ -1,0 +1,4 @@
+feature,min_count,top_n,train_unique_before,train_unique_after,test_unique_before,test_unique_after,unknown_test_rows_before_mapping,train_rows_mapped_to_other,test_rows_mapped_to_other,other_label
+age_specialty_interaction,30,140,94,72,89,72,1,228,58,AgeSpecialty_Other
+comorbidity_interaction,25,180,461,181,439,181,6,6190,1547,Comorbidity_Other
+diag_combination,25,50,41,42,41,40,196,1,196,DiagCombo_Other

@@ -4,13 +4,25 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 import re
+import warnings
 
 import joblib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from imblearn.over_sampling import SMOTE
-from imblearn.pipeline import Pipeline as ImbPipeline
+try:
+    from imblearn.over_sampling import SMOTE
+    from imblearn.pipeline import Pipeline as ImbPipeline
+
+    IMBLEARN_AVAILABLE = True
+    IMBLEARN_IMPORT_ERROR: Exception | None = None
+except Exception as exc:
+    # Fallback keeps the notebook runnable when imblearn/sklearn versions are incompatible.
+    from sklearn.pipeline import Pipeline as ImbPipeline
+
+    SMOTE = None
+    IMBLEARN_AVAILABLE = False
+    IMBLEARN_IMPORT_ERROR = exc
 from sklearn.dummy import DummyClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
@@ -123,6 +135,7 @@ def establish_dummy_baselines(
     y_train: pd.Series,
     cv_folds: int = 5,
     random_state: int = 42,
+    n_jobs: int = -1,
 ) -> pd.DataFrame:
     cv = StratifiedKFold(n_splits=cv_folds, shuffle=True, random_state=random_state)
     scoring = {
@@ -134,14 +147,13 @@ def establish_dummy_baselines(
     rows: list[dict[str, float | str]] = []
     for strategy in ["most_frequent", "stratified", "uniform"]:
         model = DummyClassifier(strategy=strategy, random_state=random_state)
-        scores = cross_validate(
-            model,
-            X_train,
-            y_train,
+        scores = _cross_validate_with_fallback(
+            estimator=model,
+            X_train=X_train,
+            y_train=y_train,
             cv=cv,
             scoring=scoring,
-            n_jobs=-1,
-            return_train_score=False,
+            n_jobs=n_jobs,
         )
         rows.append(
             {
@@ -155,11 +167,58 @@ def establish_dummy_baselines(
     return pd.DataFrame(rows).sort_values("cv_f1_macro_mean", ascending=False)
 
 
+def _cross_validate_with_fallback(
+    estimator: Any,
+    X_train: pd.DataFrame,
+    y_train: pd.Series,
+    cv: Any,
+    scoring: dict[str, Any],
+    n_jobs: int = -1,
+) -> dict[str, np.ndarray]:
+    try:
+        return cross_validate(
+            estimator,
+            X_train,
+            y_train,
+            cv=cv,
+            scoring=scoring,
+            n_jobs=n_jobs,
+            return_train_score=False,
+        )
+    except PermissionError:
+        if n_jobs == 1:
+            raise
+        warnings.warn(
+            "Parallel cross-validation is not available in this environment. "
+            "Falling back to n_jobs=1.",
+            RuntimeWarning,
+        )
+        return cross_validate(
+            estimator,
+            X_train,
+            y_train,
+            cv=cv,
+            scoring=scoring,
+            n_jobs=1,
+            return_train_score=False,
+        )
+
+
 def build_model_candidates(random_state: int = 42) -> dict[str, ImbPipeline]:
+    smote_steps: list[tuple[str, Any]] = []
+    if IMBLEARN_AVAILABLE and SMOTE is not None:
+        smote_steps.append(("smote", SMOTE(random_state=random_state)))
+    else:
+        warnings.warn(
+            "imblearn is unavailable or incompatible; proceeding without SMOTE. "
+            f"Import error: {IMBLEARN_IMPORT_ERROR}",
+            RuntimeWarning,
+        )
+
     models: dict[str, ImbPipeline] = {
         "LogisticRegression": ImbPipeline(
             steps=[
-                ("smote", SMOTE(random_state=random_state)),
+                *smote_steps,
                 ("scaler", StandardScaler()),
                 (
                     "model",
@@ -173,7 +232,7 @@ def build_model_candidates(random_state: int = 42) -> dict[str, ImbPipeline]:
         ),
         "RandomForest": ImbPipeline(
             steps=[
-                ("smote", SMOTE(random_state=random_state)),
+                *smote_steps,
                 (
                     "model",
                     RandomForestClassifier(
@@ -193,7 +252,7 @@ def build_model_candidates(random_state: int = 42) -> dict[str, ImbPipeline]:
 
         models["XGBoost"] = ImbPipeline(
             steps=[
-                ("smote", SMOTE(random_state=random_state)),
+                *smote_steps,
                 (
                     "model",
                     XGBClassifier(
@@ -263,20 +322,20 @@ def evaluate_models_cv(
     cv_folds: int = 5,
     random_state: int = 42,
     lt30_label: int = 2,
+    n_jobs: int = -1,
 ) -> pd.DataFrame:
     cv = StratifiedKFold(n_splits=cv_folds, shuffle=True, random_state=random_state)
     scoring = _build_multiclass_scoring(lt30_label=lt30_label)
 
     rows: list[dict[str, float | str]] = []
     for model_name, pipeline in models.items():
-        scores = cross_validate(
-            pipeline,
-            X_train,
-            y_train,
+        scores = _cross_validate_with_fallback(
+            estimator=pipeline,
+            X_train=X_train,
+            y_train=y_train,
             cv=cv,
             scoring=scoring,
-            n_jobs=-1,
-            return_train_score=False,
+            n_jobs=n_jobs,
         )
 
         rows.append(
@@ -551,6 +610,7 @@ def run_model_pipeline(
     cv_folds: int = 5,
     include_baselines: bool = True,
     save_artifacts: bool = True,
+    n_jobs: int = -1,
 ) -> dict[str, Any]:
     cfg = config or get_config()
     data = load_model_data(cfg, include_binary=True)
@@ -562,6 +622,7 @@ def run_model_pipeline(
             data.y_train,
             cv_folds=cv_folds,
             random_state=cfg.random_state,
+            n_jobs=n_jobs,
         )
 
     models = build_model_candidates(cfg.random_state)
@@ -573,6 +634,7 @@ def run_model_pipeline(
         cv_folds=cv_folds,
         random_state=cfg.random_state,
         lt30_label=lt30_label,
+        n_jobs=n_jobs,
     )
     test_results, fitted_models = fit_and_evaluate_test(
         models,
